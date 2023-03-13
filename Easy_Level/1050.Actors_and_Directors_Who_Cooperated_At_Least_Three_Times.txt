@@ -1,0 +1,13 @@
+# Write your MySQL query statement below
+SELECT actor_id,director_id FROM ActorDirector
+GROUP BY actor_id,director_id
+HAVING count(*) >=3;
+
+#window function implementation
+/*
+SELECT DISTINCT(actor_id), director_id
+FROM(
+SELECT actor_id, director_id , COUNT(timestamp) OVER (Partition by actor_id, director_id) as number_of_times
+FROM ActorDirector) AS temp
+WHERE number_of_times >= 3
+*/
