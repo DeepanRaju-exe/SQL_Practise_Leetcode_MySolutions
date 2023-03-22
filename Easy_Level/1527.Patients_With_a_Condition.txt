@@ -1,0 +1,12 @@
+# Write your MySQL query statement below
+SELECT * FROM PATIENTS WHERE CONDITIONS LIKE '% DIAB1%' OR CONDITIONS LIKE 'DIAB1%';
+
+#so slow
+/*select *
+from patients
+where conditions regexp '\\bDIAB1'
+*/
+
+/*select *
+from patients
+where conditions regexp '^DIAB1|[:space:]DIAB1'*/

@@ -1,0 +1,21 @@
+# Write your MySQL query statement below
+/*UPDATE Users
+SET name = CONCAT(UCASE(LEFT(name, 1)), 
+                             LCASE(SUBSTRING(name, 2)))*/
+                             
+SELECT user_id, CONCAT(UCASE(LEFT(name, 1)),LCASE(SUBSTRING(name, 2))) AS name
+FROM  Users
+ORDER BY user_id;
+
+#ANOTHER SOLUTION
+/*
+SELECT Users.user_id , CONCAT(UPPER(SUBSTR(Users.name,1,1)),LOWER(SUBSTR(Users.name,2))) AS name 
+FROM Users
+ORDER BY
+Users.user_id ASC
+
+APPROACH 2
+ Write your T-SQL query statement below 
+SELECT user_id, CONCAT(UPPER(SUBSTRING(name, 1, 1)), LOWER(SUBSTRING(name, 2, LEN(name)))) AS name
+FROM Users
+ORDER BY user_id
