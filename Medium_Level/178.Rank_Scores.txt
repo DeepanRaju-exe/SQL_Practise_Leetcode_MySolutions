@@ -1,0 +1,42 @@
+# Write your MySQL query statement below
+#my solution
+WITH SS AS 
+(SELECT E.*, DENSE_RANK() OVER(ORDER BY E.SCORE DESC) AS rank1
+ FROM Scores AS E) 
+SELECT score, rank1 AS 'rank' FROM SS;
+
+
+# like countig number if rank is 2 means there is only 2 which is below than that that is itself and rank 1. using this logic below solution .
+
+## approach 2
+/*
+SELECT
+  S1.score,
+  (
+    SELECT
+      COUNT(DISTINCT S2.score)
+    FROM
+      Scores S2
+    WHERE
+      S2.score >= S1.score
+  ) AS 'rank'
+FROM
+  Scores S1
+ORDER BY
+  S1.score DESC;
+  */
+
+  ## Approach 3 ##
+
+/*
+SELECT
+  S.score,
+  COUNT(DISTINCT T.score) AS 'rank'
+FROM
+  Scores S
+  INNER JOIN Scores T ON S.score <= T.score
+GROUP BY
+  S.id,
+  S.score
+ORDER BY
+  S.score DESC;*/

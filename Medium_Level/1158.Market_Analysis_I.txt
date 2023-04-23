@@ -1,0 +1,41 @@
+##### MY APPROPACH #######
+
+
+WITH S AS (SELECT O.buyer_id ,count(O.order_date) AS c FROM Users u
+JOIN  Orders  O ON U.user_id = O.buyer_id
+WHERE YEAR(O.order_date) = 2019
+GROUP BY  O.buyer_id)
+
+SELECT U.user_id  AS buyer_id,U.join_date,
+CASE WHEN  ISNULL(S.c) =1 THEN 0
+ELSE  S.c
+END AS orders_in_2019
+FROM Users U
+LEFT JOIN S ON U.user_id = S.buyer_id
+;
+
+
+
+
+/*
+
+Approach 1 SELECT
+    Users.user_id AS buyer_id,
+    Users.join_date,
+    COUNT(CASE WHEN YEAR(Orders.order_date) = 2019 THEN 1 ELSE NULL END) AS orders_in_2019
+FROM
+    Users
+    LEFT JOIN Orders ON Users.user_id = Orders.buyer_id
+GROUP BY
+    Users.user_id,
+    Users.join_date
+ORDER BY
+    Users.user_id;
+
+Approach 2
+
+SELECT u.user_id as buyer_id, u.join_date, count(o.order_id) as 'orders_in_2019'
+FROM users u
+LEFT JOIN Orders o
+ON o.buyer_id=u.user_id AND YEAR(order_date)='2019'
+GROUP BY u.user_id*/
