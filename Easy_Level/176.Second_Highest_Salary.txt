@@ -1,0 +1,33 @@
+SELECT  
+CASE 
+WHEN X.rn =2 THEN salary
+else NULL
+END AS SecondHighestSalary 
+FROM (SELECT *,DENSE_RANK() OVER (ORDER BY e.salary DESC) as rn FROM Employee AS e) X
+ORDER BY SecondHighestSalary DESC
+LIMIT 1
+;
+
+################################# BEST_ Approach  #################################
+/*
+1.
+SELECT
+    IFNULL(
+      (SELECT DISTINCT Salary
+       FROM Employee
+       ORDER BY Salary DESC
+        LIMIT 1 OFFSET 1),
+    NULL) AS SecondHighestSalary
+
+2.
+SELECT
+    (SELECT DISTINCT
+            Salary
+        FROM
+            Employee
+        ORDER BY Salary DESC
+        LIMIT 1 OFFSET 1) AS SecondHighestSalary
+;
+
+*/
+
