@@ -1,0 +1,17 @@
+# Write your MySQL query statement below
+SELECT name AS results FROM (SELECT U.name, count(*) as no FROM MovieRating M1
+JOIN Users U ON M1.user_id = U.user_id 
+GROUP BY M1.user_id  
+ORDER BY no DESC, U.name ASC
+LIMIT 1) c
+
+UNION 
+
+SELECT title AS results FROM  (SELECT D.title, AVG(rating) as avgi FROM MovieRating S
+JOIN Movies D ON S.movie_id = D.movie_id
+WHERE MONTH(S.created_at) =2
+GROUP BY S.movie_id
+ORDER BY avgi DESC,D.title ASC
+LIMIT 1) f
+;
+
