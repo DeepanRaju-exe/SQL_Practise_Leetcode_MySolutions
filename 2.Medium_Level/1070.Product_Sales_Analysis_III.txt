@@ -1,0 +1,10 @@
+# Write your MySQL query statement below
+WITH S AS  (
+  SELECT S.*, DENSE_RANK() OVER(PARTITION BY S.product_id ORDER BY S.year ASC ) AS rn FROM Sales S 
+  )
+SELECT product_id,year AS first_year, quantity, price FROM S
+WHERE S.rn =1 
+
+
+;
+#product_id,year AS first_year, quantity, price,rn

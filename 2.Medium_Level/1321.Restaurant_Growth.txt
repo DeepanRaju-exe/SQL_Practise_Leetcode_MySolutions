@@ -1,0 +1,5 @@
+# Write your MySQL query statement below
+ WITH S AS  (SELECT DISTINCT visited_on,amount, SUM(amount) OVER( ORDER  BY visited_on ASC RANGE BETWEEN  INTERVAL '6' DAY PRECEDING  AND CURRENT ROW) AS sum_amount,DENSE_RANK()  OVER(ORDER BY visited_on ASC) as rn FROM Customer)
+
+SELECT  DISTINCT visited_on,sum_amount AS amount,ROUND(sum_amount/7,2) AS average_amount FROM S WHERE rn>=7
+;

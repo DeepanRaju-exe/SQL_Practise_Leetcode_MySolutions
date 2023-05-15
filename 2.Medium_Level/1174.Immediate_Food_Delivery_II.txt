@@ -1,0 +1,11 @@
+# Write your MySQL query statement below
+WITH S AS (
+    SELECT *,
+    CASE WHEN (MIN(order_date) over(PARTITION BY customer_id)) = order_date AND  order_date = customer_pref_delivery_date  THEN "Immediate" 
+    WHEN  (MIN(order_date) over(PARTITION BY customer_id)) = order_date AND order_date <> customer_pref_delivery_date THEN "Scheduled" 
+    END AS type  FROM Delivery
+    
+)
+
+SELECT (round(((SELECT count(DISTINCT customer_id) FROM S WHERE type= 'Immediate')/(SELECT COUNT(DISTINCT customer_id) FROM S))*100,2)) AS immediate_percentage;
+#select count(*) from s

@@ -1,0 +1,27 @@
+# Write your MySQL query statement below
+WITH A AS (SELECT A.pid AS pid FROM Insurance A
+JOIN  Insurance B ON (A.lat)+' '+(A.lon) = (B.lat)+' '+(B.lon) AND A.pid <> B.pid )
+
+SELECT ROUND(SUM(tiv_2016),2) AS tiv_2016 
+FROM 
+(SELECT A.tiv_2016 AS tiv_2016 FROM Insurance A 
+JOIN Insurance B ON A.tiv_2015 = B.tiv_2015 AND A.pid <> B.pid
+WHERE A.pid NOT IN (SELECT pid FROM A)
+GROUP BY A.pid, A.tiv_2016)X
+;
+
+################ WINDOW  FUNCTION ######################
+
+/*
+
+SELECT ROUND(SUM(TIV_2016),2) AS TIV_2016
+FROM
+(SELECT *,
+COUNT(*) OVER(PARTITION BY TIV_2015) AS CNT1,
+COUNT(*) OVER(PARTITION BY LAT, LON) AS CNT2
+FROM INSURANCE
+) AS TBL
+WHERE CNT1 > =2 AND CNT2 =1
+
+*/
+
