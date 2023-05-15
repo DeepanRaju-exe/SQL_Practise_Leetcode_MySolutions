@@ -1,0 +1,11 @@
+# Write your MySQL query statement below
+WITH S AS (SELECT *,LEAD(id) OVER() AS ld, LAG(id) over() AS lg FROM Stadium
+WHERE people >=100) 
+, A AS (select S.* from S
+LEFT JOIN S s1 ON S.ld = s1.id +1 AND S.lg = s1.id -1
+WHERE S.id = S.lg +1 AND S.id + 1 = S.ld)
+
+SELECT id,visit_date,people FROM S where id in (SELECT ld from A) OR id IN (SELECT lg FROM A) OR id in (SELECT id FROM A)
+;
+
+
