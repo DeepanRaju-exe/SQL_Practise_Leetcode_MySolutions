@@ -1,0 +1,24 @@
+# Write your MySQL query statement below
+#511. refer game play analysis
+#My approach
+SELECT sell_date, COUNT(DISTINCT product) AS num_sold, GROUP_CONCAT(DISTINCT product ORDER BY product SEPARATOR ',' ) AS products  FROM Activities
+GROUP BY sell_date; 
+
+
+/*SELECT sell_date, COUNT( DISTINCT product ) AS num_sold ,    
+GROUP_CONCAT( DISTINCT product ORDER BY product ASC separator ',' ) AS products   
+FROM Activities GROUP BY sell_date ORDER BY sell_date ASC;*/
+
+/*
+WITH CTE AS (
+  SELECT DISTINCT * FROM Activities
+)
+
+SELECT 
+sell_date,
+COUNT(product) AS num_sold,
+STRING_AGG(product, ',') WITHIN GROUP (ORDER BY product ASC) AS products
+FROM CTE
+GROUP BY sell_date
+ORDER BY 1 ASC
+*/
