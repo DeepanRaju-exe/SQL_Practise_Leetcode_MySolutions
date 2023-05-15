@@ -1,3 +1,0 @@
-SELECT  e.name as Employee FROM Employee e
-join Employee m ON e.managerId =m.id
-Where e.salary > m.salary  ;

@@ -1,9 +1,0 @@
-# Write your MySQL query statement below
-WITH SS AS (SELECT player_id, MIN(event_date) AS dates  FROM Activity A
-GROUP BY player_id)
-
-SELECT ROUND((SELECT count(A.player_id)  AS i FROM Activity A 
-INNER JOIN SS ON A.player_id = SS.player_id AND DATEDIFF(A.event_date,SS.dates)=1)
-/(SELECT COUNT(DISTINCT player_id) AS Total FROM Activity), 
-2) AS fraction
-;
